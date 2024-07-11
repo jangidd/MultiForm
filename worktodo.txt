@@ -1,0 +1,47 @@
+errors to be resolved : 
+-----------------------
+1. data not getting saved for the forms other than the first two.======> done
+2. form css not getting sorted (need help)======> done 
+3. didn't add the callback form .=======> done.(i have used bootstrap modal in it).
+4. if the new radiologist logins and his status is underprogress than redirect him/her to a 
+   diff. html page.=======> done.
+5. add status section in coordinator. ======> done
+6. if any changes made on coordinator page than update to the database too.=====> done.
+7. the reporting area field is giving by default true value instead of the selected value.=====> done.
+8. the normal date field is not getting saved due to any issues.(work on others first).=====> done.
+9. the password length is not turning green and then add a error message if all the requirements 
+   are not matched.======> done.
+10. fix the display of the last two pages and the next button of the first page should also be on 
+   right side.=====> done.
+11. add the u4rad logo on the form page.=====> done.
+12. shift first form next button to the right.======> done.
+
+
+Imp......
+# See complete details.
+* I can do one thing , at the coordinator's page where the radiologist's status and some of the
+  info is present ,i can add a button, where i can add a page giving complete details of the 
+  radiologist.=====> done.
+
+
+
+13. call back form ka data bhi coordinator page pe show krna h if it is present
+     =======> *** Ask ruchi mam , ki kahan dikhana h i.e. callback form to kuchh hi logon ka hoga ****. 
+14. call back form ki fields sahi se dalni h do bachi hui. =====> done.
+15. if a user with same email exists than give render all his details in the form 
+16. make sure only one person is able to save only one detail
+17. email and otp authentication
+18. login me status k according new coordinator ka login dekhlena
+19. pending page me uska status bhi dikhna chahiye (coord ka ya super ka vo sochlena)
+20. search , select status , refresh , and total records wala logic bhi add krna h.=====> done.
+21. login page ko wapas vaise hi krdena (modal hata dena). ======> done.
+
+*** the message is getting updated when the message is changed from the dashboard , but it is not 
+    taking the message from the model/ db
+
+*** watch some videos to understand how does the pdf gets generated automatically after form 
+    submission.
+
+
+
+

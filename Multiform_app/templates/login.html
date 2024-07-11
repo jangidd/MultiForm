@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XRAi Reporting</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            margin: 100px auto; /* Adjust the margin value as per your preference */
+            width: 80%;
+            max-width: 80%;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 7px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center; /* Center the header text */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .btn-signup {
+            background-color: #FFA500;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-signup:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group.show-password {
+            position: relative;
+        }
+
+        .form-group.show-password input[type="password"] {
+            padding-right: 40px;
+        }
+
+        .form-group.show-password .checkbox-btn {
+            position: absolute;
+            top: 75%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid"> 
+            <a class="navbar-brand" href="#">U4RAD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>Login Account</h1>
+                        <div class="loader"></div>
+                        <div class="overlay"></div>
+
+                        <form id="loginForm" method="POST" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            {% if error %}
+                                <div class="alert alert-danger" role="alert">{{ error }}</div>
+                            {% endif %}
+                            <div class="form-group">
+                                <label for="email">Email ID</label>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="xyz@gmail.com" required>
+                            </div>
+
+                            <div class="form-group show-password">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" required oninput="toggleCheckboxOption()">
+                                <span class="checkbox-btn">
+                                    <input type="checkbox" id="showPasswordCheckbox" onclick="myFunction()">
+                                </span>
+                            </div>
+
+                            <center>
+                                <button type="submit" class="btn btn-signup" id="loginButton" style="outline: none;">Login</button>
+                                <div class="spinner-grow text-warning" role="status" id="spinner" style="display: none;">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </center>
+                        </form>
+                        <br>
+                        <center>
+                            <button type="button" class="btn btn-signup" id="radiologistButton" style="outline: none;" onclick="window.location.href='/radiologist'">Radiologist Registration</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Radiologist Registration Modal -->
+    <!-- <div class="modal fade" id="radiologistModal" tabindex="-1" aria-labelledby="radiologistModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="radiologistModalLabel">Radiologist Registration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to fill the complete form or want a callback form to talk with our team?</p>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-signup" id="completeFormButton">Complete Form</button>
+                        <button type="button" class="btn btn-signup" id="callbackFormButton">Callback Form</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div> -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var loginForm = document.getElementById("loginForm");
+            var loginButton = document.getElementById("loginButton");
+            var spinner = document.getElementById("spinner");
+
+            loginForm.addEventListener("submit", function () {
+                spinner.style.display = "inline-block";
+                loginButton.style.display = "none"; // Hide the login button
+            });
+        });
+
+        function toggleCheckboxOption() {
+            var passwordInput = document.getElementById("password");
+            var checkboxOption = document.getElementById("showPasswordCheckbox");
+
+            if (passwordInput.value.trim().length > 0) {
+                checkboxOption.style.display = "inline-block";
+            } else {
+                checkboxOption.style.display = "none";
+            }
+        }
+
+        function myFunction() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+        document.getElementById("completeFormButton").addEventListener("click", function() {
+            window.location.href = "/radiologist";
+        });
+
+        document.getElementById("callbackFormButton").addEventListener("click", function() {
+            window.location.href = "{% url 'callback_form' %}";
+        });
+    </script>
+</body>
+</html>
